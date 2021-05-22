@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:straussweb/src/providers/auth.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -8,6 +10,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   bool _animacionInicio = false;
   bool _sel = false;
+  AuthProvider auth = AuthProvider.init();
+  FirebaseAuth statusAuth = FirebaseAuth.instance;
+
   void _loadData() async {
     await Future.delayed(Duration(milliseconds: 100));
     setState(() {
@@ -61,14 +66,34 @@ class _LoginPageState extends State<LoginPage> {
               ),
               Text(
                 'Iniciar Sesión',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
               ),
               SizedBox(
                 height: 30,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 70),
+                  child: Text(
+                    'Correo electronico',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
               ),
               _crearEmail(context),
               SizedBox(
                 height: 30,
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 70),
+                  child: Text(
+                    'Contraseña',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
               ),
               _crearContrasena(context),
               SizedBox(
@@ -79,7 +104,6 @@ class _LoginPageState extends State<LoginPage> {
                 children: [
                   _checkTerminos(context),
                   _crearOlvidasteContrasena(context),
-                   
                 ],
               ),
               SizedBox(
@@ -123,30 +147,37 @@ class _LoginPageState extends State<LoginPage> {
                 ]),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Column(
+              child: Stack(
                 children: [
-                  SizedBox(
-                    height: 30,
-                  ),
                   Image.asset(
-                    'assets/ima5.png',
-                    fit: BoxFit.cover,
-                    height: 250,
+                    'assets/35eb7d5bce221d9392feb1e426ba48af.jpg',
+                    fit: BoxFit.fill,
+                    height: double.infinity,
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  Text(
-                    'La mejor forma de organizar tu repertorio con tu grupo',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(  vertical: 50),
+                          child: Image.asset(
+                            'assets/ima5.png',
+                            fit: BoxFit.scaleDown,
+                            width: 410,
+                            
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(40.0),
+                          child: Text("Aliqua tempor reprehenderit ullamco irure ad cillum. Aliqua tempor reprehenderit ullamco irure ad cillum.  Aliqua tempor reprehenderit ullamco irure ad cillum.", style: TextStyle(fontSize: 20,color: Colors.white),textAlign: TextAlign.center,),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(40.0),
+                         child: _crearBotonRegistrar(context),
+                        )
+                      ],
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  _crearBotonRegistrar(context),
                 ],
               ),
             ),
@@ -163,7 +194,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: InputDecoration(
             icon: Icon(
               Icons.email,
-               color: Colors.blue[900],
+              color: Colors.blue[900],
             ),
             hintText: 'Email',
             hintStyle: TextStyle(fontStyle: FontStyle.italic)),
@@ -196,9 +227,11 @@ class _LoginPageState extends State<LoginPage> {
           backgroundColor:
               MaterialStateProperty.resolveWith((states) => Colors.blue[900])),
       child: Container(
-          width: 120, height: 50, child: Center(child: Text('Login'))),
+          width: 120, height: 50, child: Center(child: Text('LOGIN'))),
       onPressed: () {
-        setState(() {});
+        setState(() {
+          auth.signOut();
+        });
       },
     );
   }
@@ -207,7 +240,7 @@ class _LoginPageState extends State<LoginPage> {
     return ElevatedButton(
       style: ButtonStyle(
           backgroundColor:
-              MaterialStateProperty.resolveWith((states) =>Colors.blue[900])),
+              MaterialStateProperty.resolveWith((states) => Colors.blue[900])),
       child: Container(
         width: 120,
         height: 50,
@@ -217,7 +250,11 @@ class _LoginPageState extends State<LoginPage> {
           width: 20,
         ),
       ),
-      onPressed: () {},
+      onPressed: () {
+        setState(() {
+          auth.signInWithGoogle();
+        });
+      },
     );
   }
 
@@ -234,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
         height: 300.0,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(200.0),
-            color: Colors.deepPurple[700]));
+            color: Color.fromRGBO(30, 40, 83, 1)));
 
     return AnimatedOpacity(
       duration: Duration(milliseconds: 500),
@@ -264,11 +301,14 @@ class _LoginPageState extends State<LoginPage> {
             style: TextStyle(fontSize: 18, color: Colors.blue[900]),
           ))),
       onPressed: () {
-        setState(() {});
+        setState(() {
+          Navigator.pushNamed(context, 'register');
+        });
       },
     );
   }
-   Widget _checkTerminos(BuildContext context) {
+
+  Widget _checkTerminos(BuildContext context) {
     return Container(
       alignment: Alignment.center,
       child: Row(
@@ -285,9 +325,7 @@ class _LoginPageState extends State<LoginPage> {
           ),
           Text(
             'Recordarme',
-           
           ),
-          
         ],
       ),
     );
