@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+class HomePage extends StatelessWidget {
+  const HomePage({Key key}) : super(key: key);
 
-class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
-  }
+    return Scaffold(
+      backgroundColor: Colors.grey,
+    );
+}
+
 }

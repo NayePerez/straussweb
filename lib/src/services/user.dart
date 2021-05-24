@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:straussweb/src/models/user.dart';
 
 class UserServices {
-  String collection = "users";
+  String collection = "usuarios";
   FirebaseFirestore firebaseFirestore;
 
   void createUser({
