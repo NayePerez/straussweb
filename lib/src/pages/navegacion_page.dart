@@ -22,136 +22,142 @@ class _NavegacionPageState extends State<NavegacionPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          appBar(),
-          Container(
-            height: MediaQuery.of(context).size.height - 60,
-            child: appBarNavigator(),
-          )
-          // appBarNavigator()
-        ],
-      ),
+    return  Scaffold(
+        body: Column(
+          children: [
+            appBar(),
+            Container(
+              height: MediaQuery.of(context).size.height - 60,
+              child: appBarNavigator(),
+            )
+            // appBarNavigator()
+          ],
+        ),
+      
     );
   }
 
   Widget appBar() {
     return Container(
+      
       decoration: BoxDecoration(
           color: Colors.blue[900], border: Border.all(color: Colors.black54)),
       height: 60,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Image.asset(
-              'assets/ima7.png',
-              height: 45,
+      width: double.infinity,
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Image.asset(
+                'assets/ima7.png',
+                height: 45,
+              ),
             ),
-          ),
-          Container(
-            height: 40,
-            width: 250,
-            child: _buscarGrupos(),
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.22,
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.home, size: 30, color: _color1),
-                    onPressed: () {
-                      setState(() {
-                        _page = 0;
-                        appBarNavigator();
-                      });
-                    }),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color11, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.person_pin_circle_rounded,
-                        color: _color2, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 1;
-                        appBarNavigator();
-                      });
-                    }),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color22, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.help_center_outlined,
-                        color: _color3, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 2;
-                        appBarNavigator();
-                      });
-                    }),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color33, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    tooltip: 'Home',
-                    icon:
-                        Icon(Icons.handyman_outlined, color: _color4, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 3;
-                        appBarNavigator();
-                      });
-                    }),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color44, height: 6, width: 100),
-              )
-            ],
-          ),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.20,
-          ),
-          _crearBotonLogin(),
-          SizedBox(
-            width: 10,
-          ),
-          _crearBotonRegister()
-        ],
+            Container(
+              height: 40,
+              width: 250,
+              child: _buscarGrupos(),
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.22,
+            ),
+            Stack(
+              children: [
+                Container(
+                  height: 60,
+                  width: 100,
+                  child: IconButton(
+                      icon: Icon(Icons.home, size: 30, color: _color1),
+                      onPressed: () {
+                        setState(() {
+                          _page = 0;
+                          appBarNavigator();
+                        });
+                      }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(color: _color11, height: 6, width: 100),
+                )
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  height: 60,
+                  width: 100,
+                  child: IconButton(
+                      icon: Icon(Icons.person_pin_circle_rounded,
+                          color: _color2, size: 30),
+                      onPressed: () {
+                        setState(() {
+                          _page = 1;
+                          appBarNavigator();
+                        });
+                      }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(color: _color22, height: 6, width: 100),
+                )
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  height: 60,
+                  width: 100,
+                  child: IconButton(
+                      icon: Icon(Icons.help_center_outlined,
+                          color: _color3, size: 30),
+                      onPressed: () {
+                        setState(() {
+                          _page = 2;
+                          appBarNavigator();
+                        });
+                      }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(color: _color33, height: 6, width: 100),
+                )
+              ],
+            ),
+            Stack(
+              children: [
+                Container(
+                  height: 60,
+                  width: 100,
+                  child: IconButton(
+                      tooltip: 'Home',
+                      icon: Icon(Icons.handyman_outlined,
+                          color: _color4, size: 30),
+                      onPressed: () {
+                        setState(() {
+                          _page = 3;
+                          appBarNavigator();
+                        });
+                      }),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(color: _color44, height: 6, width: 100),
+                )
+              ],
+            ),
+            SizedBox(
+              width: MediaQuery.of(context).size.width * 0.20,
+            ),
+            _crearBotonLogin(),
+            SizedBox(
+              width: 10,
+            ),
+            _crearBotonRegister()
+          ],
+        ),
       ),
     );
   }
