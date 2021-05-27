@@ -8,7 +8,7 @@
             "name": "straussweb",
             "request": "launch",
             "type": "dart",
-            "args": ["-d", "chrome","--web-port", "5000"],
+            "args": ["-d", "chrome","--web-port", "5000","--web-renderer=html"],
             
         }
         
