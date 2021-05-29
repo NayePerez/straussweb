@@ -14,9 +14,7 @@ class NavegacionPage extends StatelessWidget {
             AppBarPage(),
             Container(
               height: MediaQuery.of(context).size.height - 60,
-              // child: appBarNavigator(),
             )
-            // appBarNavigator()
           ],
         ),
       ),
@@ -45,13 +43,11 @@ class _AppBarPageState extends State<AppBarPage> {
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > 1200) {
-          print('-----condicion 1');
           return appBarWeb();
-        } else if (constraints.maxWidth > 800 && constraints.maxWidth < 1200) {
-          print('---condicion 2');
+        }
+        if (constraints.maxWidth > 600) {
           return appBarWeb();
         } else {
-          print('-----condicion 3');
           return appBarMobil();
         }
       },
@@ -59,6 +55,7 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   Widget appBarWeb() {
+    appBarNavigatorWeb();
     return Container(
       decoration: BoxDecoration(
           color: Colors.blue[900], border: Border.all(color: Colors.black54)),
@@ -183,6 +180,7 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   Widget appBarMobil() {
+    appBarNavigatorMovil();
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, border: Border.all(color: Colors.black54)),
@@ -194,6 +192,7 @@ class _AppBarPageState extends State<AppBarPage> {
             padding: EdgeInsets.only(top: 5, bottom: 5),
             color: Colors.blue[900],
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -207,6 +206,7 @@ class _AppBarPageState extends State<AppBarPage> {
                   width: 250,
                   child: _buscarGrupos(),
                 ),
+                _menuPop()
               ],
             ),
           ),
@@ -223,7 +223,7 @@ class _AppBarPageState extends State<AppBarPage> {
                         onPressed: () {
                           setState(() {
                             _page = 0;
-                            appBarNavigator();
+                            appBarNavigatorMovil();
                           });
                         }),
                   ),
@@ -244,7 +244,7 @@ class _AppBarPageState extends State<AppBarPage> {
                         onPressed: () {
                           setState(() {
                             _page = 1;
-                            appBarNavigator();
+                            appBarNavigatorMovil();
                           });
                         }),
                   ),
@@ -265,7 +265,7 @@ class _AppBarPageState extends State<AppBarPage> {
                         onPressed: () {
                           setState(() {
                             _page = 2;
-                            appBarNavigator();
+                            appBarNavigatorMovil();
                           });
                         }),
                   ),
@@ -287,7 +287,7 @@ class _AppBarPageState extends State<AppBarPage> {
                         onPressed: () {
                           setState(() {
                             _page = 3;
-                            appBarNavigator();
+                            appBarNavigatorMovil();
                           });
                         }),
                   ),
@@ -304,54 +304,108 @@ class _AppBarPageState extends State<AppBarPage> {
     );
   }
 
-  appBarNavigator() {
+  appBarNavigatorMovil() {
     switch (_page) {
       case 0:
-         _color1 = Colors.blue[900];
-  _color2 = Colors.grey[500];
-  _color3 = Colors.grey[500];
-   _color4 = Colors.grey[500];
-   _color11 = Colors.blue[900];
-   _color22 = Colors.white;
-   _color33 = Colors.white;
-   _color44 = Colors.white;
+        _color1 = Colors.blue[900];
+        _color2 = Colors.grey[500];
+        _color3 = Colors.grey[500];
+        _color4 = Colors.grey[500];
+        _color11 = Colors.blue[900];
+        _color22 = Colors.white;
+        _color33 = Colors.white;
+        _color44 = Colors.white;
 
         return HomePage();
         break;
       case 1:
-        
-   _color1 = Colors.grey[500];
-  _color2 = Colors.blue[900];
-  _color3 = Colors.grey[500];
-   _color4 = Colors.grey[500];
-   _color11 = Colors.white;
-   _color22 = Colors.blue[900];
-   _color33 = Colors.white;
-   _color44 = Colors.white;
+        _color1 = Colors.grey[500];
+        _color2 = Colors.blue[900];
+        _color3 = Colors.grey[500];
+        _color4 = Colors.grey[500];
+        _color11 = Colors.white;
+        _color22 = Colors.blue[900];
+        _color33 = Colors.white;
+        _color44 = Colors.white;
 
         //return MyPostPage();
         break;
       case 2:
         _color1 = Colors.grey[500];
-  _color2 = Colors.grey[500];
-  _color3 = Colors.blue[900];
-   _color4 = Colors.grey[500];
-   _color11 = Colors.white;
-   _color22 = Colors.white;
-   _color33 = Colors.blue[900];
-   _color44 = Colors.white;
+        _color2 = Colors.grey[500];
+        _color3 = Colors.blue[900];
+        _color4 = Colors.grey[500];
+        _color11 = Colors.white;
+        _color22 = Colors.white;
+        _color33 = Colors.blue[900];
+        _color44 = Colors.white;
 
         //return HelpPage();
         break;
       case 3:
-         _color1 = Colors.grey[500];
-  _color2 = Colors.grey[500];
-  _color3 = Colors.grey[500];
-   _color4 = Colors.blue[900];
-   _color11 = Colors.white;
-   _color22 = Colors.white;
-   _color33 = Colors.white;
-   _color44 = Colors.blue[900];
+        _color1 = Colors.grey[500];
+        _color2 = Colors.grey[500];
+        _color3 = Colors.grey[500];
+        _color4 = Colors.blue[900];
+        _color11 = Colors.white;
+        _color22 = Colors.white;
+        _color33 = Colors.white;
+        _color44 = Colors.blue[900];
+
+        // return ConfigPage();
+        break;
+      default:
+      // return HomePage();
+    }
+  }
+
+  appBarNavigatorWeb() {
+    switch (_page) {
+      case 0:
+        _color1 = Color.fromRGBO(16, 30, 90, 1);
+        _color2 = Colors.white;
+        _color3 = Colors.white;
+        _color4 = Colors.white;
+        _color11 = Color.fromRGBO(16, 30, 90, 1);
+        _color22 = Colors.blue[900];
+        _color33 = Colors.blue[900];
+        _color44 = Colors.blue[900];
+
+        return HomePage();
+        break;
+      case 1:
+        _color1 = Colors.white;
+        _color2 = Color.fromRGBO(16, 30, 90, 1);
+        _color3 = Colors.white;
+        _color4 = Colors.white;
+        _color11 = Colors.blue[900];
+        _color22 = Color.fromRGBO(16, 30, 90, 1);
+        _color33 = Colors.blue[900];
+        _color44 = Colors.blue[900];
+
+        //return MyPostPage();
+        break;
+      case 2:
+        _color1 = Colors.white;
+        _color2 = Colors.white;
+        _color3 = Color.fromRGBO(16, 30, 90, 1);
+        _color4 = Colors.white;
+        _color11 = Colors.blue[900];
+        _color22 = Colors.blue[900];
+        _color33 = Color.fromRGBO(16, 30, 90, 1);
+        _color44 = Colors.blue[900];
+
+        //return HelpPage();
+        break;
+      case 3:
+        _color1 = Colors.white;
+        _color2 = Colors.white;
+        _color3 = Colors.white;
+        _color4 = Color.fromRGBO(16, 30, 90, 1);
+        _color11 = Colors.blue[900];
+        _color22 = Colors.blue[900];
+        _color33 = Colors.blue[900];
+        _color44 = Color.fromRGBO(16, 30, 90, 1);
 
         // return ConfigPage();
         break;
@@ -415,5 +469,23 @@ class _AppBarPageState extends State<AppBarPage> {
             Navigator.pushNamed(context, 'register');
           },
         ));
+  }
+
+  Widget _menuPop() {
+    return PopupMenuButton(
+        icon: Icon(
+          Icons.menu,
+          color: Colors.white,
+          size: 30,
+        ),
+        onSelected: (selectedValue) {
+          selectedValue
+              ? Navigator.pushNamed(context, 'register')
+              : Navigator.pushNamed(context, 'login');
+        },
+        itemBuilder: (BuildContext ctx) => [
+              PopupMenuItem(child: Text('Crear cuenta'), value: true),
+              PopupMenuItem(child: Text('Inicar Sesión'), value: false),
+            ]);
   }
 }
