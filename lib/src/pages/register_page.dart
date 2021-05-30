@@ -16,9 +16,7 @@ class _RegisterPageState extends State<RegisterPage> {
   TextEditingController _inputFieldDateController = new TextEditingController();
   final usuarioProvider = new UsuarioProvider();
 
- 
   DateTime _date;
-  
 
   @override
   Widget build(BuildContext context) {
@@ -37,14 +35,14 @@ class _RegisterPageState extends State<RegisterPage> {
           return Scaffold(
             body: Container(
               decoration: fondoDegradado(),
-                 child: _loginWeb(bloc),
+              child: _loginWeb(bloc),
             ),
           );
         } else {
           return Scaffold(
               body: Container(
             decoration: fondoDegradado(),
-             child: _loginMobil(bloc),
+            child: _loginMobil(bloc),
           ));
         }
       },
@@ -168,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   _campoNombre(context, bloc),
                   _campoCorreo(context, bloc),
                   _campoFecha(context, bloc),
-                  _campoContrasena(context,bloc),
+                  _campoContrasena(context, bloc),
                   _checkTerminos(context),
                   _bottonRegistrar(bloc)
                 ],
@@ -204,7 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     fontSize: 20,
                   )),
               onPressed: () {
-               // Navigator.pushNamed(context, "home");
+                // Navigator.pushNamed(context, "home");
               },
             ),
           ),
@@ -233,7 +231,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: azulOscuro(),
                   ), // myIcon is a 48px-wide widget.
                   errorText: snapshot.error,
-                    errorStyle: TextStyle(fontSize: 15),
+                  errorStyle: TextStyle(fontSize: 15),
                   hintText: 'Nombre completo',
                 ),
                 onChanged: bloc.changeName),
@@ -260,7 +258,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     color: azulOscuro(),
                   ), // myIcon is a 48px-wide widget.
                   errorText: snapshot.error,
-                    errorStyle: TextStyle(fontSize: 15),
+                  errorStyle: TextStyle(fontSize: 15),
                   hintText: 'correo_ejemplo@mail.com',
                 ),
                 onChanged: bloc.changeEmail),
@@ -292,20 +290,22 @@ class _RegisterPageState extends State<RegisterPage> {
                 errorStyle: TextStyle(fontSize: 15),
                 hintText: 'mm/dd/yyyy',
               ),
-              onTap: ()async {
+              onTap: () async {
                 FocusScope.of(context).requestFocus(new FocusNode());
-              await  _selectDate(context,);
-              
+                await _selectDate(
+                  context,
+                );
+
                 bloc.changeDate(_inputFieldDateController.text);
               },
-
-              
             ),
           );
         });
   }
 
-  Future _selectDate(BuildContext context,) async {
+  Future _selectDate(
+    BuildContext context,
+  ) async {
     DateTime picked = await showDatePicker(
       context: context,
       initialDate: new DateTime.now(),
@@ -323,35 +323,33 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _campoContrasena(BuildContext context, bloc) {
     return StreamBuilder<Object>(
-      stream: bloc.passwordStream,
-      builder: (context, snapshot) {
-        return Container(
-          width: 400,
-          child: TextField(
-            obscureText: true,
-            keyboardType: TextInputType.text,
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: Colors.white,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              suffixIcon: Padding(
-                padding: EdgeInsetsDirectional.only(),
-                child: Icon(
-                  Icons.lock_outline,
-                  color: azulOscuro(),
-                ), // myIcon is a 48px-wide widget.
-              ),
-              errorText: snapshot.error,
-                errorStyle: TextStyle(fontSize: 15),
-              hintText: '*******',
-            ),
-            onChanged: bloc.changePassword
-          ),
-        );
-      }
-    );
+        stream: bloc.passwordStream,
+        builder: (context, snapshot) {
+          return Container(
+            width: 400,
+            child: TextField(
+                obscureText: true,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  suffixIcon: Padding(
+                    padding: EdgeInsetsDirectional.only(),
+                    child: Icon(
+                      Icons.lock_outline,
+                      color: azulOscuro(),
+                    ), // myIcon is a 48px-wide widget.
+                  ),
+                  errorText: snapshot.error,
+                  errorStyle: TextStyle(fontSize: 15),
+                  hintText: '*******',
+                ),
+                onChanged: bloc.changePassword),
+          );
+        });
   }
 
   Widget _bottonLogin() {
@@ -375,43 +373,46 @@ class _RegisterPageState extends State<RegisterPage> {
 
   Widget _bottonRegistrar(bloc) {
     return StreamBuilder<Object>(
-      stream: bloc.formValidStream,
-      builder: (context, snapshot) {
-        return ElevatedButton(
-          style:
-              ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.white)),
-          child: Container(
-            width: 180,
-            child: Center(
-                child: Text(
-              'Crear cuenta',
-              style:
-                  TextStyle(fontSize: 20, color: Color.fromRGBO(12, 29, 45, 1.0)),
-            )),
-          ),
-          onPressed: snapshot.hasData ? ()=> _registerUser(bloc, context) : (){
-            print('${snapshot.hasData}');
-          }
-        );
-      }
-    );
-    
+        stream: bloc.formValidStream,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(Colors.white)),
+              child: Container(
+                width: 180,
+                child: Center(
+                    child: Text(
+                  'Crear cuenta',
+                  style: TextStyle(
+                      fontSize: 20, color: Color.fromRGBO(12, 29, 45, 1.0)),
+                )),
+              ),
+              onPressed: snapshot.hasData
+                  ? () {
+                      if (_sel == true) {
+                        _registerUser(bloc, context);
+                      } else {
+                        _errorCampos('Error terminos y condiciones');
+                      }
+                    }
+                  : null);
+        });
   }
-  
-  _registerUser( bloc, BuildContext context) async {
 
+  _registerUser(bloc, BuildContext context) async {
     print('Se creo una cuenta');
 
-    Map info = await usuarioProvider.register(bloc.name, bloc.email, bloc.password, bloc.date);
-    
+    final info = await usuarioProvider.register(bloc.name, bloc.email, bloc.password, bloc.date);
 
-     
-    if ( info['ok'] ) {
-        Navigator.pushNamed(context, 'home');
+    if (info['ok']) {
+      Navigator.pushNamed(context, 'home');
     } else {
       print(info['mensaje']);
-     mostrarAlerta( context, info['mensaje'] );
+       mostrarAlerta(context, info['mensaje']);
     }
-    
+  }
+
+  _errorCampos(message) async {
+     mostrarAlerta(context, message);
   }
 }

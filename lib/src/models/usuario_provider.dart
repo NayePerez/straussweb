@@ -31,13 +31,13 @@ class UsuarioProvider {
     }*/
   }
 
-  Future register(
-      String nombre, String email, String password, String date) async {
+  Future register(String nombre, String email, String password, String date) async {
     try {
-      final _db = FirebaseFirestore.instance;
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      DocumentReference userRef = _db.collection('usuarios').doc();
+
+       print('entro aqui');
+    
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+      DocumentReference userRef = FirebaseFirestore.instance.collection('usuarios').doc();
 
       userRef.set(
         {
@@ -47,35 +47,15 @@ class UsuarioProvider {
           'lastSign': date,
         },
       );
-      //return {'ok': true};
+      return {'ok': true};
     } on FirebaseAuthException catch (e) {
       print(e.message);
       return {'ok': false, 'mensaje': e.message};
     }
-    /* 
+     
 
    
-    */
+    
   }
 
-  /*final resp = await http.post(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=$_firebaseToken',
-      body: json.encode( authData )
-    );
-
-    Map<String, dynamic> decodedResp = json.decode( resp.body );
-
-   
-
-    if ( decodedResp.containsKey('idToken') ) {
-      
-      _prefs.token = decodedResp['idToken'];
-
-      return { 'ok': true, 'token': decodedResp['idToken'] };
-    } else {
-      return { 'ok': false, 'mensaje': decodedResp['error']['message'] };
-    }
-
-
-  }*/
-}
+ }

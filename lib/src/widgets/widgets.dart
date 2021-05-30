@@ -14,7 +14,6 @@ BoxDecoration decorationBorderContianet(Color color) {
             spreadRadius: 10.0)
       ]);
 }
-
 BoxDecoration fondoDegradado() {
   return BoxDecoration(
       gradient: LinearGradient(colors: [
@@ -30,15 +29,15 @@ BoxDecoration fondoDegradado() {
 
 BoxDecoration fondoDegrdado2() {
   return BoxDecoration(
-      gradient: LinearGradient(colors: [
-        azul(), //Azul
-        azulOscuro(), //Azul Oscuro
-        azulOscuro() //AzulOscuro
-      ], stops: [
-        0.2,
-        0.58,
-        0.7
-      ], begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter),
+       gradient: LinearGradient(colors: [
+    azul(), //Azul
+    azulOscuro(), //Azul Oscuro
+    azulOscuro() //AzulOscuro
+  ], stops: [
+    0.2,
+    0.58,
+    0.7
+  ], begin: FractionalOffset.topCenter, end: FractionalOffset.bottomCenter),
       borderRadius: BorderRadius.circular(30),
       boxShadow: <BoxShadow>[
         BoxShadow(
@@ -49,25 +48,33 @@ BoxDecoration fondoDegrdado2() {
       ]);
 }
 
-Widget mostrarAlerta(context, String message) {
-  return AlertDialog(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.0)),
-    title: Text('Titulo'),
-    content: Column(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        Text(message),
-        FlutterLogo(size: 100.0)
-      ],
-    ),
-    actions: <Widget>[
-      
-      FlatButton(
-        child: Text('Close'),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      ),
-    ],
-  );
+Future<void> mostrarAlerta(context, String message) async {
+return showDialog(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+
+        return AlertDialog(
+          shape: RoundedRectangleBorder( borderRadius: BorderRadius.circular(20.0) ),
+          title: Text('Advertencia'),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(message, style: TextStyle(fontSize: 20),),
+            ],
+          ),
+          actions: <Widget>[
+           
+            FlatButton(
+              child: Text('Ok'),
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+
+      }
+
+    );
 }
