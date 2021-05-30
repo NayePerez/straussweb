@@ -6,7 +6,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 class UsuarioProvider {
   Future login(String email, String password) async {
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
 
       return {'ok': true};
     } on FirebaseAuthException catch (e) {
@@ -15,13 +16,14 @@ class UsuarioProvider {
     }
   }
 
-  Future register(
-      String nombre, String email, String password, String date) async {
+  Future register(String nombre, String email, String password, String date) async {
+        FirebaseAuth auth = FirebaseAuth.instance;
+
     try {
-      await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
-      DocumentReference userRef =
-          FirebaseFirestore.instance.collection('usuarios').doc();
+      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+       
+    await auth.currentUser.updateProfile(displayName: nombre, photoURL: null);
+      DocumentReference userRef = FirebaseFirestore.instance.collection('usuarios').doc();
 
       userRef.set(
         {
@@ -40,5 +42,5 @@ class UsuarioProvider {
 
   void logout() async {
     await FirebaseAuth.instance.signOut();
-    }
+  }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:straussweb/src/bloc/provider.dart';
-import 'package:straussweb/src/models/usuario_provider.dart';
+import 'package:straussweb/src/services/usuario_provider.dart';
 import 'package:straussweb/src/utils/colors_utils.dart';
 import 'package:straussweb/src/widgets/widgets.dart';
 

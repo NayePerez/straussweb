@@ -1,20 +1,16 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:straussweb/src/models/usuario_provider.dart';
+import 'package:straussweb/src/services/usuario_provider.dart';
 import 'package:straussweb/src/pages/config_page.dart';
 import 'package:straussweb/src/pages/help_page.dart';
 import 'package:straussweb/src/pages/home_page.dart';
 import 'package:straussweb/src/pages/mypost_page.dart';
+import 'package:straussweb/src/utils/colors_utils.dart';
 
 class NavegacionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          UsuarioProvider f = UsuarioProvider();
-          f.logout();
-        },
-      ),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -52,8 +48,8 @@ class _AppBarPageState extends State<AppBarPage> {
         if (constraints.maxWidth > 1200) {
           return appBarWeb();
         }
-        if (constraints.maxWidth > 600) {
-          return appBarWeb();
+        if (constraints.maxWidth > 760) {
+          return appBarWeb2();
         } else {
           return appBarMobil();
         }
@@ -68,120 +64,228 @@ class _AppBarPageState extends State<AppBarPage> {
           color: Colors.blue[900], border: Border.all(color: Colors.black54)),
       height: 60,
       width: double.infinity,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Image.asset(
-                'assets/ima7.png',
-                height: 45,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Image.asset(
+              'assets/ima7.png',
+              height: 45,
+            ),
+          ),
+          Container(
+            height: 40,
+            width: 250,
+            child: _buscarGrupos(),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.home, size: 30, color: _color1),
+                    onPressed: () {
+                      setState(() {
+                        _page = 0;
+                        // appBarNavigator();
+                      });
+                    }),
               ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color11, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.person_pin_circle_rounded,
+                        color: _color2, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 1;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color22, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.help_center_outlined,
+                        color: _color3, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 2;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color33, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    tooltip: 'Home',
+                    icon:
+                        Icon(Icons.handyman_outlined, color: _color4, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 3;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color44, height: 6, width: 100),
+              )
+            ],
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          _authOptions()
+        ],
+      ),
+    );
+  }
+
+  Widget appBarWeb2() {
+    appBarNavigatorWeb();
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.blue[900], border: Border.all(color: Colors.black54)),
+      height: 60,
+      width: double.infinity,
+      child: Row(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: Image.asset(
+              'assets/ima7.png',
+              height: 45,
             ),
-            Container(
-              height: 40,
-              width: 250,
-              child: _buscarGrupos(),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.22,
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: 60,
-                  width: 100,
-                  child: IconButton(
-                      icon: Icon(Icons.home, size: 30, color: _color1),
-                      onPressed: () {
-                        setState(() {
-                          _page = 0;
-                          // appBarNavigator();
-                        });
-                      }),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(color: _color11, height: 6, width: 100),
-                )
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: 60,
-                  width: 100,
-                  child: IconButton(
-                      icon: Icon(Icons.person_pin_circle_rounded,
-                          color: _color2, size: 30),
-                      onPressed: () {
-                        setState(() {
-                          _page = 1;
-                          // appBarNavigator();
-                        });
-                      }),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(color: _color22, height: 6, width: 100),
-                )
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: 60,
-                  width: 100,
-                  child: IconButton(
-                      icon: Icon(Icons.help_center_outlined,
-                          color: _color3, size: 30),
-                      onPressed: () {
-                        setState(() {
-                          _page = 2;
-                          // appBarNavigator();
-                        });
-                      }),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(color: _color33, height: 6, width: 100),
-                )
-              ],
-            ),
-            Stack(
-              children: [
-                Container(
-                  height: 60,
-                  width: 100,
-                  child: IconButton(
-                      tooltip: 'Home',
-                      icon: Icon(Icons.handyman_outlined,
-                          color: _color4, size: 30),
-                      onPressed: () {
-                        setState(() {
-                          _page = 3;
-                          // appBarNavigator();
-                        });
-                      }),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Container(color: _color44, height: 6, width: 100),
-                )
-              ],
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.20,
-            ),
-            _crearBotonLogin(context),
-            SizedBox(
-              width: 10,
-            ),
-            _crearBotonRegister(context)
-          ],
-        ),
+          ),
+          Container(
+            height: 40,
+            width: 250,
+            child: _buscarGrupos(),
+          ),
+          Expanded(
+            child: Container(),
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.home, size: 30, color: _color1),
+                    onPressed: () {
+                      setState(() {
+                        _page = 0;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color11, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.person_pin_circle_rounded,
+                        color: _color2, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 1;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color22, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    icon: Icon(Icons.help_center_outlined,
+                        color: _color3, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 2;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color33, height: 6, width: 100),
+              )
+            ],
+          ),
+          Stack(
+            children: [
+              Container(
+                height: 60,
+                width: 100,
+                child: IconButton(
+                    tooltip: 'Home',
+                    icon:
+                        Icon(Icons.handyman_outlined, color: _color4, size: 30),
+                    onPressed: () {
+                      setState(() {
+                        _page = 3;
+                        // appBarNavigator();
+                      });
+                    }),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(color: _color44, height: 6, width: 100),
+              )
+            ],
+          ),
+          Expanded(
+            child: Container(),
+          ),
+        ],
       ),
     );
   }
@@ -494,5 +598,71 @@ class _AppBarPageState extends State<AppBarPage> {
               PopupMenuItem(child: Text('Crear cuenta'), value: true),
               PopupMenuItem(child: Text('Inicar Sesión'), value: false),
             ]);
+  }
+
+  Widget _authOptions() {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    return StreamBuilder<User>(
+        stream: auth.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+                Container(
+                  height: 50,
+                  width: 250,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          topLeft: Radius.circular(20))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(right: 2.0),
+                        child: CircleAvatar(
+                            child: Text('JG'), backgroundColor: azulOscuro()),
+                      ),
+                      Text(
+                        '${snapshot.data.displayName}',
+                        style: TextStyle(color: azulOscuro(), fontSize: 15, fontWeight: FontWeight.bold),
+                      ),
+                      SizedBox(
+                        width: 20,
+                      ),
+                      IconButton(
+                          icon: Icon(
+                            Icons.call_missed_outgoing_sharp,
+                            color: azulOscuro(),
+                          ),
+                          onPressed: () {
+                            UsuarioProvider f = UsuarioProvider();
+                            f.logout();
+                            Navigator.pushReplacementNamed(context, 'navegacion');
+                          })
+                    ],
+                  ),
+                )
+              ]),
+            );
+          } else {
+            return Row(
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.20,
+                ),
+                _crearBotonLogin(context),
+                SizedBox(
+                  width: 10,
+                ),
+                _crearBotonRegister(context),
+                 SizedBox(
+                  width: 10,
+                ),
+              ],
+            );
+          }
+        });
   }
 }
