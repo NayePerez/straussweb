@@ -405,7 +405,7 @@ class _RegisterPageState extends State<RegisterPage> {
     final info = await usuarioProvider.register(bloc.name, bloc.email, bloc.password, bloc.date);
 
     if (info['ok']) {
-      Navigator.pushNamed(context, 'home');
+      Navigator.pushNamed(context, 'navegacion');
     } else {
       print(info['mensaje']);
        mostrarAlerta(context, info['mensaje']);

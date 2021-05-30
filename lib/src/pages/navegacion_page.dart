@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:straussweb/src/models/usuario_provider.dart';
 import 'package:straussweb/src/pages/config_page.dart';
 import 'package:straussweb/src/pages/help_page.dart';
 import 'package:straussweb/src/pages/home_page.dart';
@@ -8,6 +9,12 @@ class NavegacionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          UsuarioProvider f = UsuarioProvider();
+          f.logout();
+        },
+      ),
       body: SingleChildScrollView(
         child: Column(
           children: [

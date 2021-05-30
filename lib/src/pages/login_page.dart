@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:straussweb/src/bloc/provider.dart';
+import 'package:straussweb/src/models/usuario_provider.dart';
 import 'package:straussweb/src/utils/colors_utils.dart';
 import 'package:straussweb/src/widgets/widgets.dart';
 
 class LoginPage extends StatelessWidget {
+  final usuarioProvider = new UsuarioProvider();
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of(context);
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth > 1200) {
           return Scaffold(
             body: Container(
               decoration: fondoDegradado(),
-              child: _loginWeb(context),
+              child: _loginWeb(context, bloc),
             ),
           );
         }
@@ -19,21 +23,21 @@ class LoginPage extends StatelessWidget {
           return Scaffold(
             body: Container(
               decoration: fondoDegradado(),
-              child: _loginWeb(context),
+              child: _loginWeb(context, bloc),
             ),
           );
         } else {
           return Scaffold(
               body: Container(
             decoration: fondoDegradado(),
-            child: _loginMobil(context),
+            child: _loginMobil(context, bloc),
           ));
         }
       },
     );
   }
 
-  Widget _loginWeb(BuildContext context) {
+  Widget _loginWeb(BuildContext context, bloc) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Center(
@@ -59,15 +63,15 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       height: 40,
                     ),
-                    _campoCorreo(context),
+                    _campoCorreo(context, bloc),
                     SizedBox(
                       height: 20,
                     ),
-                    _campoContrasena(context),
+                    _campoContrasena(context, bloc),
                     SizedBox(
                       height: 110,
                     ),
-                    _bottonLogin()
+                    _bottonLogin(bloc)
                   ],
                 ),
               ),
@@ -109,7 +113,7 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _loginMobil(BuildContext context) {
+  Widget _loginMobil(BuildContext context, bloc) {
     return SingleChildScrollView(
       child: Stack(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,15 +164,15 @@ class LoginPage extends StatelessWidget {
                   SizedBox(
                     height: 40,
                   ),
-                  _campoCorreo(context),
+                  _campoCorreo(context, bloc),
                   SizedBox(
                     height: 20,
                   ),
-                  _campoContrasena(context),
+                  _campoContrasena(context, bloc),
                   SizedBox(
                     height: 110,
                   ),
-                  _bottonLogin()
+                  _bottonLogin(bloc)
                 ],
               ),
             ),
@@ -178,66 +182,93 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _campoCorreo(BuildContext context) {
-    return Container(
-      width: 500,
-      child: TextField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Colors.white,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          suffixIcon: Icon(
-            Icons.email,
-            color: azulOscuro(),
-          ),
-          hintText: 'correo_ejemplo@mail.com',
-        ),
-        onChanged: (v) {},
-      ),
-    );
-  }
-
-  Widget _campoContrasena(BuildContext context) {
-    return Container(
-      width: 500,
-      child: TextField(
-          obscureText: true,
-          keyboardType: TextInputType.text,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            suffixIcon: Padding(
-              padding: EdgeInsetsDirectional.only(),
-              child: Icon(
-                Icons.lock_outline,
+  Widget _campoCorreo(BuildContext context, bloc) {
+    return StreamBuilder<Object>(
+      stream: bloc.emailStream,
+      builder: (context, snapshot) {
+        return Container(
+          width: 500,
+          child: TextField(
+            keyboardType: TextInputType.emailAddress,
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              suffixIcon: Icon(
+                Icons.email,
                 color: azulOscuro(),
-              ), // myIcon is a 48px-wide widget.
+              ),
+              errorText: snapshot.error,
+              hintText: 'correo_ejemplo@mail.com',
             ),
-            hintText: '*******',
-          )),
+            onChanged: bloc.changeEmail
+          ),
+        );
+      }
     );
   }
 
-  Widget _bottonLogin() {
-    return ElevatedButton(
-      style:
-          ButtonStyle(backgroundColor: MaterialStateProperty.all(azulOscuro())),
-      child: Container(
-        width: 180,
-        child: Center(
-            child: Text(
-          'Inicar Sesion',
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        )),
-      ),
-      onPressed: () {},
+  Widget _campoContrasena(BuildContext context, bloc) {
+    return StreamBuilder<Object>(
+      stream: bloc.passwordStream,
+      builder: (context, snapshot) {
+        return Container(
+          width: 500,
+          child: TextField(
+              obscureText: true,
+              keyboardType: TextInputType.text,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                suffixIcon: Padding(
+                  padding: EdgeInsetsDirectional.only(),
+                  child: Icon(
+                    Icons.lock_outline,
+                    color: azulOscuro(),
+                  ), // myIcon is a 48px-wide widget.
+                ),
+                errorText: snapshot.error,
+                hintText: '*******',
+              ),
+              onChanged: bloc.changePassword
+              ),
+
+        );
+      }
     );
+  }
+
+  Widget _bottonLogin(bloc) {
+    return StreamBuilder(
+        stream: bloc.formValidStreamLogin,
+        builder: (context, snapshot) {
+          return ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor: MaterialStateProperty.all(azulOscuro())),
+              child: Container(
+                width: 180,
+                child: Center(
+                    child: Text(
+                  'Inicar Sesion',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                )),
+              ),
+              onPressed: (){
+                  if(snapshot.hasData){
+                      _loginUser(bloc, context);
+                  }else{
+                    return null;
+                  }
+
+
+                
+              });
+        });
   }
 
   Widget _bottonRegistrar(context) {
@@ -257,5 +288,19 @@ class LoginPage extends StatelessWidget {
         Navigator.pushNamed(context, 'register');
       },
     );
+  }
+
+  _loginUser(bloc, BuildContext context) async {
+    
+    print('entro');
+
+    final info = await usuarioProvider.login(bloc.email, bloc.password);
+
+    if (info['ok']) {
+      Navigator.pushNamed(context, 'navegacion');
+    } else {
+      print(info['mensaje']);
+      mostrarAlerta(context, info['mensaje']);
+    }
   }
 }

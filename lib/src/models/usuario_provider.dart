@@ -4,40 +4,24 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class UsuarioProvider {
-  Future login(
-      String nombre, String email, String password, String date) async {
-    final authData = {
-      'email': email,
-      'password': password,
-      'returnSecureToken': true
-    };
+  Future login(String email, String password) async {
+    try {
+      await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-    /*final resp = await http.post(
-      'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=$_firebaseToken',
-      body: json.encode( authData )
-    );
-
-    Map<String, dynamic> decodedResp = json.decode( resp.body );
-
-    print(decodedResp);
-
-    if ( decodedResp.containsKey('idToken') ) {
-      
-      _prefs.token = decodedResp['idToken'];
-
-      return { 'ok': true, 'token': decodedResp['idToken'] };
-    } else {
-      return { 'ok': false, 'mensaje': decodedResp['error']['message'] };
-    }*/
+      return {'ok': true};
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return {'ok': false, 'mensaje': e.message};
+    }
   }
 
-  Future register(String nombre, String email, String password, String date) async {
+  Future register(
+      String nombre, String email, String password, String date) async {
     try {
-
-       print('entro aqui');
-    
-      await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
-      DocumentReference userRef = FirebaseFirestore.instance.collection('usuarios').doc();
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      DocumentReference userRef =
+          FirebaseFirestore.instance.collection('usuarios').doc();
 
       userRef.set(
         {
@@ -52,10 +36,9 @@ class UsuarioProvider {
       print(e.message);
       return {'ok': false, 'mensaje': e.message};
     }
-     
-
-   
-    
   }
 
- }
+  void logout() async {
+    await FirebaseAuth.instance.signOut();
+    }
+}

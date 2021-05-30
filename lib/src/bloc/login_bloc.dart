@@ -18,7 +18,7 @@ class LoginBloc with Validators {
   Stream<String> get dateStream => _dateController.transform( validarDate );
 
   Stream<bool> get formValidStream => Rx.combineLatest4(nameStream ,emailStream, passwordStream, dateStream, (n , e, p, d) => true );
-
+  Stream<bool> get formValidStreamLogin => Rx.combineLatest2(emailStream, passwordStream, (e, p) => true );
 
 
   // Insertar valores al Stream
