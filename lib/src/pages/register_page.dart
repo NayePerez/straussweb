@@ -37,14 +37,14 @@ class _RegisterPageState extends State<RegisterPage> {
           return Scaffold(
             body: Container(
               decoration: fondoDegradado(),
-              //   child: _loginWeb(bloc),
+                 child: _loginWeb(bloc),
             ),
           );
         } else {
           return Scaffold(
               body: Container(
             decoration: fondoDegradado(),
-            // child: _loginMobil(bloc),
+             child: _loginMobil(bloc),
           ));
         }
       },
@@ -403,12 +403,15 @@ class _RegisterPageState extends State<RegisterPage> {
     print('Se creo una cuenta');
 
     Map info = await usuarioProvider.register(bloc.name, bloc.email, bloc.password, bloc.date);
+    
 
-    /*if ( info['ok'] ) {
-       Navigator.pushReplacementNamed(context, 'home');
+     
+    if ( info['ok'] ) {
+        Navigator.pushNamed(context, 'home');
     } else {
-      mostrarAlerta( context, info['mensaje'] );
-    }*/
+      print(info['mensaje']);
+     mostrarAlerta( context, info['mensaje'] );
+    }
     
   }
 }

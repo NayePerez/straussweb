@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -31,21 +33,29 @@ class UsuarioProvider {
 
   Future register(
       String nombre, String email, String password, String date) async {
-    User usuario = FirebaseAuth.instance.currentUser;
-    final _db = FirebaseFirestore.instance;
+    try {
+      final _db = FirebaseFirestore.instance;
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      DocumentReference userRef = _db.collection('usuarios').doc();
 
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(email: email, password: password);
-    DocumentReference userRef = _db.collection('usuarios').doc(usuario.uid);
+      userRef.set(
+        {
+          'id': userRef.id,
+          'displayName': nombre,
+          'email': email,
+          'lastSign': date,
+        },
+      );
+      //return {'ok': true};
+    } on FirebaseAuthException catch (e) {
+      print(e.message);
+      return {'ok': false, 'mensaje': e.message};
+    }
+    /* 
 
-    userRef.set(
-      {
-        'uid': usuario.uid,
-        'displayName': nombre,
-        'email': email,
-        'lastSign': date,
-      },
-    );
+   
+    */
   }
 
   /*final resp = await http.post(
@@ -55,7 +65,7 @@ class UsuarioProvider {
 
     Map<String, dynamic> decodedResp = json.decode( resp.body );
 
-    print(decodedResp);
+   
 
     if ( decodedResp.containsKey('idToken') ) {
       
