@@ -22,7 +22,7 @@ class Validators {
     } else if (password.length >= 6) {
       sink.add(password);
     } else {
-      sink.addError('Contraseña debil, minimo 6 caracteres');
+      sink.addError('Contraseña no valida, minimo 6 caracteres');
     }
   });
 

@@ -11,11 +11,13 @@ class NavegacionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.blue[900],
       body: SingleChildScrollView(
         child: Column(
           children: [
             AppBarPage(),
             Container(
+              color: Colors.white,
               height: MediaQuery.of(context).size.height - 60,
             )
           ],
@@ -31,24 +33,23 @@ class AppBarPage extends StatefulWidget {
 }
 
 class _AppBarPageState extends State<AppBarPage> {
-  int _page = 0;
-  Color _color1 = Colors.blue[900];
-  Color _color2 = Colors.grey[500];
-  Color _color3 = Colors.grey[500];
-  Color _color4 = Colors.grey[500];
-  Color _color11 = Colors.blue[900];
-  Color _color22 = Colors.white;
-  Color _color33 = Colors.white;
-  Color _color44 = Colors.white;
+  Color _color1 = Color.fromRGBO(16, 30, 90, 1);
+  Color _color2 = Colors.white;
+  Color _color3 = Colors.white;
+  Color _color4 = Colors.white;
+  Color _color11 = Colors.white;
+  Color _color22 = Colors.transparent;
+  Color _color33 = Colors.transparent;
+  Color _color44 = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        if (constraints.maxWidth > 1200) {
+        if (constraints.maxWidth > 1300) {
           return appBarWeb();
         }
-        if (constraints.maxWidth > 760) {
+        if (constraints.maxWidth > 750) {
           return appBarWeb2();
         } else {
           return appBarMobil();
@@ -58,10 +59,7 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   Widget appBarWeb() {
-    appBarNavigatorWeb();
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.blue[900], border: Border.all(color: Colors.black54)),
       height: 60,
       width: double.infinity,
       child: Row(
@@ -81,90 +79,77 @@ class _AppBarPageState extends State<AppBarPage> {
           Expanded(
             child: Container(),
           ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.home, size: 30, color: _color1),
-                    onPressed: () {
-                      setState(() {
-                        _page = 0;
-                        // appBarNavigator();
-                      });
-                    }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color11),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color11, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.person_pin_circle_rounded,
-                        color: _color2, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 1;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Home',
+                      child: Icon(Icons.home, size: 30, color: _color1))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(0);
+                  //_page = 0;
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color22),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color22, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.help_center_outlined,
-                        color: _color3, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 2;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Personal',
+                      child:
+                          Icon(Icons.person_sharp, size: 30, color: _color2))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(1);
+
+                  // appBarNavigator();
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color33),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color33, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    tooltip: 'Home',
-                    icon:
-                        Icon(Icons.handyman_outlined, color: _color4, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 3;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Help',
+                      child: Icon(Icons.help_center_rounded,
+                          size: 30, color: _color3))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(2);
+                  // appBarNavigator();
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color44),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color44, height: 6, width: 100),
-              )
-            ],
-          ),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Settings',
+                      child: Icon(Icons.settings, size: 30, color: _color4))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(3);
+                  // appBarNavigator();
+                });
+              }),
           Expanded(
             child: Container(),
           ),
@@ -175,10 +160,7 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   Widget appBarWeb2() {
-    appBarNavigatorWeb();
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.blue[900], border: Border.all(color: Colors.black54)),
       height: 60,
       width: double.infinity,
       child: Row(
@@ -198,90 +180,77 @@ class _AppBarPageState extends State<AppBarPage> {
           Expanded(
             child: Container(),
           ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.home, size: 30, color: _color1),
-                    onPressed: () {
-                      setState(() {
-                        _page = 0;
-                        // appBarNavigator();
-                      });
-                    }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color11),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color11, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.person_pin_circle_rounded,
-                        color: _color2, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 1;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Home',
+                      child: Icon(Icons.home, size: 30, color: _color1))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(0);
+                  //_page = 0;
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color22),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color22, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    icon: Icon(Icons.help_center_outlined,
-                        color: _color3, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 2;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Personal',
+                      child:
+                          Icon(Icons.person_sharp, size: 30, color: _color2))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(1);
+
+                  // appBarNavigator();
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color33),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color33, height: 6, width: 100),
-              )
-            ],
-          ),
-          Stack(
-            children: [
-              Container(
-                height: 60,
-                width: 100,
-                child: IconButton(
-                    tooltip: 'Home',
-                    icon:
-                        Icon(Icons.handyman_outlined, color: _color4, size: 30),
-                    onPressed: () {
-                      setState(() {
-                        _page = 3;
-                        // appBarNavigator();
-                      });
-                    }),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Help',
+                      child: Icon(Icons.help_center_rounded,
+                          size: 30, color: _color3))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(2);
+                  // appBarNavigator();
+                });
+              }),
+          ElevatedButton(
+              style: ButtonStyle(
+                elevation: MaterialStateProperty.all(0),
+                backgroundColor: MaterialStateProperty.all(_color44),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(color: _color44, height: 6, width: 100),
-              )
-            ],
-          ),
+              child: Container(
+                  height: 60,
+                  width: 82,
+                  child: Tooltip(
+                      message: 'Settings',
+                      child: Icon(Icons.settings, size: 30, color: _color4))),
+              onPressed: () {
+                setState(() {
+                  appBarNavigator(3);
+                  // appBarNavigator();
+                });
+              }),
           Expanded(
             child: Container(),
           ),
@@ -291,13 +260,11 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   Widget appBarMobil() {
-    appBarNavigatorMovil();
     return Container(
-      decoration: BoxDecoration(
-          color: Colors.white, border: Border.all(color: Colors.black54)),
       height: 100,
       width: double.infinity,
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             padding: EdgeInsets.only(top: 5, bottom: 5),
@@ -314,7 +281,7 @@ class _AppBarPageState extends State<AppBarPage> {
                 ),
                 Container(
                   height: 40,
-                  width: 250,
+                  width: MediaQuery.of(context).size.width * 0.6,
                   child: _buscarGrupos(),
                 ),
                 _menuPop()
@@ -324,90 +291,78 @@ class _AppBarPageState extends State<AppBarPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Stack(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 100,
-                    child: IconButton(
-                        icon: Icon(Icons.home, size: 26, color: _color1),
-                        onPressed: () {
-                          setState(() {
-                            _page = 0;
-                            appBarNavigatorMovil();
-                          });
-                        }),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(_color11),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 37),
-                    child: Container(color: _color11, height: 6, width: 100),
+                  child: Container(
+                      height: 40,
+                      width: 45,
+                      child: Tooltip(
+                        message: 'Home',
+                        child: Icon(Icons.home, size: 26, color: _color1),
+                      )),
+                  onPressed: () {
+                    setState(() {
+                      appBarNavigator(0);
+                      //_page = 0;
+                    });
+                  }),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(_color22),
                   ),
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 100,
-                    child: IconButton(
-                        icon: Icon(Icons.person_pin_circle_rounded,
-                            color: _color2, size: 26),
-                        onPressed: () {
-                          setState(() {
-                            _page = 1;
-                            appBarNavigatorMovil();
-                          });
-                        }),
+                  child: Container(
+                      height: 40,
+                      width: 45,
+                      child: Tooltip(
+                          message: 'Personal',
+                          child: Icon(Icons.person_sharp,
+                              size: 26, color: _color2))),
+                  onPressed: () {
+                    setState(() {
+                      appBarNavigator(1);
+                      // appBarNavigator();
+                    });
+                  }),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(_color33),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 37),
-                    child: Container(color: _color22, height: 6, width: 100),
+                  child: Container(
+                      height: 40,
+                      width: 45,
+                      child: Tooltip(
+                          message: 'Help',
+                          child: Icon(Icons.help_center_rounded,
+                              size: 26, color: _color3))),
+                  onPressed: () {
+                    setState(() {
+                      appBarNavigator(2);
+                      // appBarNavigator();
+                    });
+                  }),
+              ElevatedButton(
+                  style: ButtonStyle(
+                    elevation: MaterialStateProperty.all(0),
+                    backgroundColor: MaterialStateProperty.all(_color44),
                   ),
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 100,
-                    child: IconButton(
-                        icon: Icon(Icons.help_center_outlined,
-                            color: _color3, size: 26),
-                        onPressed: () {
-                          setState(() {
-                            _page = 2;
-                            appBarNavigatorMovil();
-                          });
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 37),
-                    child: Container(color: _color33, height: 6, width: 100),
-                  ),
-                ],
-              ),
-              Stack(
-                children: [
-                  Container(
-                    height: 20,
-                    width: 100,
-                    child: IconButton(
-                        tooltip: 'Home',
-                        icon: Icon(Icons.handyman_outlined,
-                            color: _color4, size: 26),
-                        onPressed: () {
-                          setState(() {
-                            _page = 3;
-                            appBarNavigatorMovil();
-                          });
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 37),
-                    child: Container(color: _color44, height: 6, width: 100),
-                  ),
-                ],
-              ),
+                  child: Container(
+                      height: 40,
+                      width: 45,
+                      child: Tooltip(
+                          message: 'Settings',
+                          child:
+                              Icon(Icons.settings, size: 26, color: _color4))),
+                  onPressed: () {
+                    setState(() {
+                      appBarNavigator(3);
+                      // appBarNavigator();
+                    });
+                  }),
             ],
           ),
         ],
@@ -415,72 +370,17 @@ class _AppBarPageState extends State<AppBarPage> {
     );
   }
 
-  appBarNavigatorMovil() {
-    switch (_page) {
-      case 0:
-        _color1 = Colors.blue[900];
-        _color2 = Colors.grey[500];
-        _color3 = Colors.grey[500];
-        _color4 = Colors.grey[500];
-        _color11 = Colors.blue[900];
-        _color22 = Colors.white;
-        _color33 = Colors.white;
-        _color44 = Colors.white;
-
-        return HomePage();
-        break;
-      case 1:
-        _color1 = Colors.grey[500];
-        _color2 = Colors.blue[900];
-        _color3 = Colors.grey[500];
-        _color4 = Colors.grey[500];
-        _color11 = Colors.white;
-        _color22 = Colors.blue[900];
-        _color33 = Colors.white;
-        _color44 = Colors.white;
-
-        //return MyPostPage();
-        break;
-      case 2:
-        _color1 = Colors.grey[500];
-        _color2 = Colors.grey[500];
-        _color3 = Colors.blue[900];
-        _color4 = Colors.grey[500];
-        _color11 = Colors.white;
-        _color22 = Colors.white;
-        _color33 = Colors.blue[900];
-        _color44 = Colors.white;
-
-        //return HelpPage();
-        break;
-      case 3:
-        _color1 = Colors.grey[500];
-        _color2 = Colors.grey[500];
-        _color3 = Colors.grey[500];
-        _color4 = Colors.blue[900];
-        _color11 = Colors.white;
-        _color22 = Colors.white;
-        _color33 = Colors.white;
-        _color44 = Colors.blue[900];
-
-        // return ConfigPage();
-        break;
-      default:
-      // return HomePage();
-    }
-  }
-
-  appBarNavigatorWeb() {
-    switch (_page) {
+  appBarNavigator(option) {
+    switch (option) {
       case 0:
         _color1 = Color.fromRGBO(16, 30, 90, 1);
         _color2 = Colors.white;
         _color3 = Colors.white;
         _color4 = Colors.white;
-        _color11 = Color.fromRGBO(16, 30, 90, 1);
-        _color22 = Colors.blue[900];
-        _color33 = Colors.blue[900];
-        _color44 = Colors.blue[900];
+        _color11 = Colors.white;
+        _color22 = Colors.transparent;
+        _color33 = Colors.transparent;
+        _color44 = Colors.transparent;
 
         return HomePage();
         break;
@@ -489,10 +389,10 @@ class _AppBarPageState extends State<AppBarPage> {
         _color2 = Color.fromRGBO(16, 30, 90, 1);
         _color3 = Colors.white;
         _color4 = Colors.white;
-        _color11 = Colors.blue[900];
-        _color22 = Color.fromRGBO(16, 30, 90, 1);
-        _color33 = Colors.blue[900];
-        _color44 = Colors.blue[900];
+        _color11 = Colors.transparent;
+        _color22 = Colors.white;
+        _color33 = Colors.transparent;
+        _color44 = Colors.transparent;
 
         //return MyPostPage();
         break;
@@ -501,10 +401,10 @@ class _AppBarPageState extends State<AppBarPage> {
         _color2 = Colors.white;
         _color3 = Color.fromRGBO(16, 30, 90, 1);
         _color4 = Colors.white;
-        _color11 = Colors.blue[900];
-        _color22 = Colors.blue[900];
-        _color33 = Color.fromRGBO(16, 30, 90, 1);
-        _color44 = Colors.blue[900];
+        _color11 = Colors.transparent;
+        _color22 = Colors.transparent;
+        _color33 = Colors.white;
+        _color44 = Colors.transparent;
 
         //return HelpPage();
         break;
@@ -513,10 +413,10 @@ class _AppBarPageState extends State<AppBarPage> {
         _color2 = Colors.white;
         _color3 = Colors.white;
         _color4 = Color.fromRGBO(16, 30, 90, 1);
-        _color11 = Colors.blue[900];
-        _color22 = Colors.blue[900];
-        _color33 = Colors.blue[900];
-        _color44 = Color.fromRGBO(16, 30, 90, 1);
+        _color11 = Colors.transparent;
+        _color22 = Colors.transparent;
+        _color33 = Colors.transparent;
+        _color44 = Colors.white;
 
         // return ConfigPage();
         break;
@@ -524,6 +424,7 @@ class _AppBarPageState extends State<AppBarPage> {
       // return HomePage();
     }
   }
+
 
   Widget _buscarGrupos() {
     return TextField(
@@ -606,11 +507,17 @@ class _AppBarPageState extends State<AppBarPage> {
         stream: auth.authStateChanges(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              child: Row(mainAxisAlignment: MainAxisAlignment.end, children: [
+            return Row(
+              children: [
                 Container(
-                  height: 50,
-                  width: 250,
+                  margin: EdgeInsets.only(right: 10.0),
+                  child: CircleAvatar(
+                      child: Text('JG'), backgroundColor: azulOscuro()),
+                ),
+                Container(
+                    child: Container(
+                  height: 40,
+                  width: 200,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -619,45 +526,45 @@ class _AppBarPageState extends State<AppBarPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        margin: EdgeInsets.only(right: 2.0),
-                        child: CircleAvatar(
-                            child: Text('JG'), backgroundColor: azulOscuro()),
-                      ),
                       Text(
                         '${snapshot.data.displayName}',
-                        style: TextStyle(color: azulOscuro(), fontSize: 15, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            color: azulOscuro(),
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
                         width: 20,
                       ),
-                      IconButton(
-                          icon: Icon(
+                      ElevatedButton(
+                          child: Icon(
                             Icons.call_missed_outgoing_sharp,
-                            color: azulOscuro(),
+                            color: Colors.white,
                           ),
+                          style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(Colors.black26),
+                              shape: MaterialStateProperty.all(CircleBorder())),
                           onPressed: () {
                             UsuarioProvider f = UsuarioProvider();
                             f.logout();
-                            Navigator.pushReplacementNamed(context, 'navegacion');
+                            Navigator.pushReplacementNamed(
+                                context, 'navegacion');
                           })
                     ],
                   ),
-                )
-              ]),
+                )),
+              ],
             );
           } else {
             return Row(
               children: [
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.20,
-                ),
                 _crearBotonLogin(context),
                 SizedBox(
                   width: 10,
                 ),
                 _crearBotonRegister(context),
-                 SizedBox(
+                SizedBox(
                   width: 10,
                 ),
               ],
