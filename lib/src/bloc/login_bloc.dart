@@ -9,6 +9,7 @@ class LoginBloc with Validators {
   final _emailController    = BehaviorSubject<String>();
   final _passwordController = BehaviorSubject<String>();
   final _dateController = BehaviorSubject<String>();
+  final _pageController = BehaviorSubject<String>();
 
 
   // Recuperar los datos del Stream
@@ -16,6 +17,7 @@ class LoginBloc with Validators {
   Stream<String> get emailStream    => _emailController.stream.transform( validarEmail );
   Stream<String> get passwordStream => _passwordController.stream.transform( validarPassword );
   Stream<String> get dateStream => _dateController.transform( validarDate );
+  Stream<String> get pageStream => _pageController.stream;
 
   Stream<bool> get formValidStream => Rx.combineLatest4(nameStream ,emailStream, passwordStream, dateStream, (n , e, p, d) => true );
   Stream<bool> get formValidStreamLogin => Rx.combineLatest2(emailStream, passwordStream, (e, p) => true );
@@ -26,6 +28,7 @@ class LoginBloc with Validators {
   Function(String) get changeEmail    => _emailController.sink.add;
   Function(String) get changePassword => _passwordController.sink.add;
   Function(String) get changeDate => _dateController.sink.add;
+  Function(String) get changePage => _pageController.sink.add;
 
 
   // Obtener el último valor ingresado a los streams
@@ -33,8 +36,10 @@ class LoginBloc with Validators {
   String get email    => _emailController.value;
   String get password => _passwordController.value;
   String get date => _dateController.value;
+  String get page => _pageController.value;
 
   dispose() {
+     _pageController?.close();
     _nameController?.close();
     _emailController?.close();
     _passwordController?.close();

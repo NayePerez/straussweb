@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:straussweb/src/bloc/provider.dart';
 import 'package:straussweb/src/services/usuario_provider.dart';
 import 'package:straussweb/src/pages/config_page.dart';
 import 'package:straussweb/src/pages/help_page.dart';
@@ -10,6 +11,7 @@ import 'package:straussweb/src/utils/colors_utils.dart';
 class NavegacionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final bloc = Provider.of(context);
     return Scaffold(
       backgroundColor: Colors.blue[900],
       body: SingleChildScrollView(
@@ -19,6 +21,29 @@ class NavegacionPage extends StatelessWidget {
             Container(
               color: Colors.white,
               height: MediaQuery.of(context).size.height - 60,
+              child: StreamBuilder(
+                stream: bloc.pageStream,
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  switch (snapshot.data.toString()) {
+                    case 'home':
+                      return HomePage();
+                      break;
+                    case 'mypost':
+                      return MyPostPage();
+                      break;
+                    case 'help':
+                      return HelpPage();
+                      break;
+                    case 'config':
+                      return ConfigPage();
+                      break;
+
+                    default:
+                      return HomePage();
+                      break;
+                  }
+                },
+              ),
             )
           ],
         ),
@@ -93,7 +118,6 @@ class _AppBarPageState extends State<AppBarPage> {
               onPressed: () {
                 setState(() {
                   appBarNavigator(0);
-                  //_page = 0;
                 });
               }),
           ElevatedButton(
@@ -371,6 +395,7 @@ class _AppBarPageState extends State<AppBarPage> {
   }
 
   appBarNavigator(option) {
+    final bloc = Provider.of(context);
     switch (option) {
       case 0:
         _color1 = Color.fromRGBO(16, 30, 90, 1);
@@ -381,8 +406,8 @@ class _AppBarPageState extends State<AppBarPage> {
         _color22 = Colors.transparent;
         _color33 = Colors.transparent;
         _color44 = Colors.transparent;
+        bloc.changePage('home');
 
-        return HomePage();
         break;
       case 1:
         _color1 = Colors.white;
@@ -393,8 +418,9 @@ class _AppBarPageState extends State<AppBarPage> {
         _color22 = Colors.white;
         _color33 = Colors.transparent;
         _color44 = Colors.transparent;
+        bloc.changePage('mypost');
 
-        //return MyPostPage();
+        return MyPostPage();
         break;
       case 2:
         _color1 = Colors.white;
@@ -405,8 +431,9 @@ class _AppBarPageState extends State<AppBarPage> {
         _color22 = Colors.transparent;
         _color33 = Colors.white;
         _color44 = Colors.transparent;
+        bloc.changePage('help');
 
-        //return HelpPage();
+        return HelpPage();
         break;
       case 3:
         _color1 = Colors.white;
@@ -417,14 +444,14 @@ class _AppBarPageState extends State<AppBarPage> {
         _color22 = Colors.transparent;
         _color33 = Colors.transparent;
         _color44 = Colors.white;
+        bloc.changePage('config');
 
-        // return ConfigPage();
+        return ConfigPage();
         break;
       default:
-      // return HomePage();
+        return HomePage();
     }
   }
-
 
   Widget _buscarGrupos() {
     return TextField(

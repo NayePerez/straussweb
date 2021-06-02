@@ -65,7 +65,7 @@ return showDialog(
           ),
           actions: <Widget>[
            
-            FlatButton(
+           ElevatedButton(
               child: Text('Ok'),
               onPressed: (){
                 Navigator.of(context).pop();

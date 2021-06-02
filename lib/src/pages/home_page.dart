@@ -5,48 +5,27 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Scrollbar(
-        isAlwaysShown: true,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: 60,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  _crearBienvenida(context),
-                  _fotoBienvenida(),
-                ],
-              ),
-              _contenedorProyectoos(),
-              Container(width: double.infinity,
-              height: 300,)
-            ],
-          ),
-        ),
-      ),
-    );
+    return Scaffold(body: Container());
   }
 
   Container _contenedorProyectoos() {
     return Container(
-              width: double.infinity,
-              height: 800,
-              color: Color.fromRGBO(203, 198, 195, 1),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Se parte de lo proximos \nproyecto y futuros exitos músicales.',
-                    style: TextStyle(fontSize: 60),
-                  ),
-                  Image.asset('assets/tumblr_mszptvq1vl1qj313eo1_500.gif',)
-                ],
-              ),
-            );
+      width: double.infinity,
+      height: 800,
+      color: Color.fromRGBO(203, 198, 195, 1),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text(
+            'Se parte de lo proximos \nproyecto y futuros exitos músicales.',
+            style: TextStyle(fontSize: 60),
+          ),
+          Image.asset(
+            'assets/tumblr_mszptvq1vl1qj313eo1_500.gif',
+          )
+        ],
+      ),
+    );
   }
 
   Widget _fotoBienvenida() {
